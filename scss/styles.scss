@@ -2,10 +2,25 @@
   width: 60%;
 }
 
-.crappy {
-  display: none;
+// .crappy {
+//   display: none;
+// }
+//
+// .teal {
+//   display: none;
+// }
+
+img {
+  width: 400px;
 }
 
-.teal {
-  display: none;
+.splat {
+  border-radius: 30px;
+  padding: 20px 0 30px 30px;
+  margin-bottom: 20px;
+  color: white;
+  background-image: url("./../../scss/img/splat.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }

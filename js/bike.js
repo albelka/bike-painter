@@ -16,9 +16,12 @@ Bike.prototype.getBikes = (function() {
     newBike.trueFalse = newBike.isCommon(color);
     if(newBike.trueFalse) {
       $('.response').text(newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + ". You should paint your bike teal or cover it with stickers!");
-      $('.teal').show;
+      $('.result .teal').show();
+      $('.result .crappy').hide();
     } else {
-      $('.response').text("Only " + newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + " You don't have to paint your bike. Unless you want to." );
+      $('.response').text("Only " + newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + ". You don't have to paint your bike. Unless you want to." );
+      $('.result .crappy').show();
+      $('.result .teal').hide();
     }
   });
 });
