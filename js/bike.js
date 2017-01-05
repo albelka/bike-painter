@@ -1,53 +1,66 @@
-function Bike () {
+function Bike (color) {
   this.bikeList = [];
   this.stolenColors = {Black: 0, Blue: 0, Brown: 0, Green: 0, Orange: 0, Pink: 0, Purple: 0, Red: 0, Silver: 0, Stickers: 0, Teal: 0, White: 0, Yellow: 0};
-  this.black = 0;
+  this.trueFalse = true;
+  this.bikeColor = color;
 }
 
 Bike.prototype.getBikes = (function() {
   var newBike = this;
-  $.get('https://bikeindex.org:443/api/v3/search?page=10&per_page=100&location=IP&distance=10&stolenness=stolen&access_token=bd2db312ba544f2d20fb8f1cacf39e99ab60a5ade579786438d48d8d67acf74b').then(function(response){
+  $.get('https://bikeindex.org:443/api/v3/search?page=1&per_page=100&location=IP&distance=10&stolenness=stolen&access_token=29a85f013b2149e1c23dc1d132a66af36dd5525610f0ac65eef0ec1918f1dc18').then(function(response){
     // console.log(JSON.stringify(response));
     response.bikes.forEach(function(bike) {
       newBike.bikeList.push(bike.frame_colors);
     });
-    console.log("HERE " + newBike.bikeList[4]);
+    newBike.countColors();
+    newBike.trueFalse = newBike.isCommon(color);
+    if(newBike.trueFalse) {
+      $('.response').text(newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + ". You should paint your bike teal or cover it with stickers!");
+    } else {
+      $('.response').text("Only " + newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + " You don't have to paint your bike. Unless you want to." );
+    }
   });
 });
 
 Bike.prototype.countColors = (function() {
   var newBike = this;
-  console.log("newbike " + newBike.bikeList[0]);
   newBike.bikeList.forEach(function(color) {
-    if(color === "Black") {
-      newBike.black++;
-    } if (color === "Blue") {
+    if(color.includes("Black")) {
+      newBike.stolenColors.Black++;
+    } if (color.includes("Blue")) {
       newBike.stolenColors.Blue++;
-    } if (color === "Brown" ) {
+    } if (color.includes("Brown")) {
       newBike.stolenColors.Brown++;
-    } if (color === "Green" ) {
+    } if (color.includes("Green")) {
       newBike.stolenColors.Green++;
-    } if (color === "Orange") {
+    } if (color.includes("Orange")) {
       newBike.stolenColors.Orange++;
-    }  if (color === "Pink") {
+    }  if (color.includes("Pink")) {
       newBike.stolenColors.Pink++;
-    } if (color === "Purple") {
+    } if (color.includes("Purple")) {
       newBike.stolenColors.Purple++;
-    } if (color === "Red") {
+    } if (color.includes("Red")) {
       newBike.stolenColors.Red++;
-    } if (color === "Silver or Grey") {
+    } if (color.includes("Silver or Gray")) {
       newBike.stolenColors.Silver++;
-    } if (color === "Stickers") {
+    } if (color.includes("Stickers")) {
       newBike.stolenColors.Stickers++;
-    } if (color === "Teal") {
+    } if (color.includes("Teal")) {
       newBike.stolenColors.Teal++;
-    } if (color === "White") {
+    } if (color.includes("White")) {
       newBike.stolenColors.White++;
-    } if (color === "Yellow or Gold") {
+    } if (color.includes("Yellow or Gold")) {
       newBike.stolenColors.Yellow++;
     }
   });
-  console.log("HOW MANY " + newBike.black);
 });
+
+Bike.prototype.isCommon = function() {
+  var howMany = this.stolenColors[this.bikeColor];
+  console.log(howMany);
+  if(howMany > 10) {
+    return true;
+  }
+};
 
 exports.bikeModule = Bike;
