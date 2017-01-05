@@ -17,14 +17,37 @@ Bike.prototype.getBikes = (function() {
 
 Bike.prototype.countColors = (function() {
   var newBike = this;
-  console.log("newbike " + newBike.stolenColors.Black);
+  console.log("newbike " + newBike.bikeList[0]);
   newBike.bikeList.forEach(function(color) {
     if(color === "Black") {
-      newBike.stolenColors.Black++;
-
+      newBike.black++;
+    } if (color === "Blue") {
+      newBike.stolenColors.Blue++;
+    } if (color === "Brown" ) {
+      newBike.stolenColors.Brown++;
+    } if (color === "Green" ) {
+      newBike.stolenColors.Green++;
+    } if (color === "Orange") {
+      newBike.stolenColors.Orange++;
+    }  if (color === "Pink") {
+      newBike.stolenColors.Pink++;
+    } if (color === "Purple") {
+      newBike.stolenColors.Purple++;
+    } if (color === "Red") {
+      newBike.stolenColors.Red++;
+    } if (color === "Silver or Grey") {
+      newBike.stolenColors.Silver++;
+    } if (color === "Stickers") {
+      newBike.stolenColors.Stickers++;
+    } if (color === "Teal") {
+      newBike.stolenColors.Teal++;
+    } if (color === "White") {
+      newBike.stolenColors.White++;
+    } if (color === "Yellow or Gold") {
+      newBike.stolenColors.Yellow++;
     }
   });
-  console.log("HOW MANY " + newBike.stolenColors.Black);
+  console.log("HOW MANY " + newBike.black);
 });
 
 exports.bikeModule = Bike;
