@@ -1,5 +1,4 @@
 var Bike = require('./../js/bike.js').bikeModule;
-var apiKey = require('./../.env').apiKey;
 
 
 
@@ -8,10 +7,10 @@ $(document).ready(function() {
     event.preventDefault();
     var color = $('#color').val();
     var city = $('#city').val();
-    $('#city').val("");
-    $('#color').val("");
-    var newBike = new Bike(color);
+    var newBike = new Bike(color, city);
 
     newBike.getBikes();
+    // $('#city').val("");
+    // $('#color').val("");
   });
 });

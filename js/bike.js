@@ -1,25 +1,28 @@
-function Bike (color) {
+var apiKey = require('./../.env').apiKey;
+
+function Bike (color, city) {
   this.bikeList = [];
   this.stolenColors = {Black: 0, Blue: 0, Brown: 0, Green: 0, Orange: 0, Pink: 0, Purple: 0, Red: 0, Silver: 0, Stickers: 0, Teal: 0, White: 0, Yellow: 0};
   this.trueFalse = true;
   this.bikeColor = color;
+  this.bikeCity = city;
 }
 
-Bike.prototype.getBikes = (function() {
+Bike.prototype.getBikes = (function(city) {
   var newBike = this;
-  $.get('https://bikeindex.org:443/api/v3/search?page=1&per_page=100&location=IP&distance=10&stolenness=stolen&access_token=29a85f013b2149e1c23dc1d132a66af36dd5525610f0ac65eef0ec1918f1dc18').then(function(response){
+  $.get('https://bikeindex.org:443/api/v3/search?page=1&per_page=100&location=' + city + '&distance=10&stolenness=stolen&access_token=' + apiKey).then(function(response){
     // console.log(JSON.stringify(response));
     response.bikes.forEach(function(bike) {
       newBike.bikeList.push(bike.frame_colors);
     });
     newBike.countColors();
-    newBike.trueFalse = newBike.isCommon(color);
+    newBike.trueFalse = newBike.isCommon();
     if(newBike.trueFalse) {
-      $('.response').text(newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + ". You should paint your bike teal or cover it with stickers!");
+      $('.response').text(newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes in " + newBike.bikeCity + " were painted " + newBike.bikeColor + ". You should paint your bike teal or cover it with stickers!");
       $('.result .teal').show();
       $('.result .crappy').hide();
     } else {
-      $('.response').text("Only " + newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes were painted " + newBike.bikeColor + ". You don't have to paint your bike. Unless you want to." );
+      $('.response').text("Only " + newBike.stolenColors[newBike.bikeColor] + " out of 100 stolen bikes in " + newBike.bikeCity + " were painted " + newBike.bikeColor + ". You don't have to paint your bike. Unless you want to." );
       $('.result .crappy').show();
       $('.result .teal').hide();
     }
