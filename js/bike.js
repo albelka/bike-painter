@@ -10,8 +10,7 @@ function Bike (color, city) {
 
 Bike.prototype.getBikes = (function(city) {
   var newBike = this;
-  $.get('https://bikeindex.org:443/api/v3/search?page=1&per_page=100&location=' + city + '&distance=10&stolenness=stolen&access_token=' + apiKey).then(function(response){
-    // console.log(JSON.stringify(response));
+  $.get('https://bikeindex.org:443/api/v3/search?page=1&per_page=100&location=' + newBike.bikeCity + '&distance=50&stolenness=proximity&access_token=' + apiKey).then(function(response){
     response.bikes.forEach(function(bike) {
       newBike.bikeList.push(bike.frame_colors);
     });
@@ -26,6 +25,8 @@ Bike.prototype.getBikes = (function(city) {
       $('.result .crappy').show();
       $('.result .teal').hide();
     }
+  }).fail(function(message) {
+    $('.response').text(message.responseJSON.error);
   });
 });
 
@@ -64,7 +65,6 @@ Bike.prototype.countColors = (function() {
 
 Bike.prototype.isCommon = function() {
   var howMany = this.stolenColors[this.bikeColor];
-  console.log(howMany);
   if(howMany > 10) {
     return true;
   }
